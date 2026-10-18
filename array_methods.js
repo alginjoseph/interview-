@@ -15,6 +15,7 @@ const users = [
 
 // ============================================================
 // 1. push() — Adds one or more elements to the END of an array
+// Syntax : array.push(element1, element2, ...elementN)
 // Returns: new length of the array
 // ============================================================
 const pushExample = [...fruits];
@@ -25,7 +26,8 @@ console.log("New length:", newLength); // 7
 
 // ============================================================
 // 2. pop() — Removes the LAST element from an array
-// Returns: the removed element
+// Syntax : array.pop()
+// Returns: the removed element (or undefined if empty)
 // ============================================================
 const popExample = [...fruits];
 const removed = popExample.pop();
@@ -34,7 +36,8 @@ console.log("Removed:", removed);     // 'elderberry'
 
 // ============================================================
 // 3. shift() — Removes the FIRST element from an array
-// Returns: the removed element
+// Syntax : array.shift()
+// Returns: the removed element (or undefined if empty)
 // ============================================================
 const shiftExample = [...fruits];
 const shiftedItem = shiftExample.shift();
@@ -43,6 +46,7 @@ console.log("Shifted item:", shiftedItem); // 'apple'
 
 // ============================================================
 // 4. unshift() — Adds elements to the BEGINNING of an array
+// Syntax : array.unshift(element1, element2, ...elementN)
 // Returns: new length of the array
 // ============================================================
 const unshiftExample = [...fruits];
@@ -52,7 +56,8 @@ console.log("unshift():", unshiftExample);
 
 // ============================================================
 // 5. map() — Creates a NEW array by transforming each element
-// Does NOT mutate the original array
+// Syntax : array.map((element, index, array) => newValue)
+// Returns: new array of same length. Does NOT mutate original.
 // ============================================================
 const doubled = numbers.map((num) => num * 2);
 console.log("map():", doubled); // [6, 2, 8, 2, 10, 18, 4, 12, 10, 6, 10]
@@ -65,7 +70,8 @@ console.log("map() destructured:", userCards);
 
 // ============================================================
 // 6. filter() — Creates a NEW array with elements that PASS a test
-// Does NOT mutate the original array
+// Syntax : array.filter((element, index, array) => condition)
+// Returns: new array (may be shorter). Does NOT mutate original.
 // ============================================================
 const uniqueNums = [...new Set(numbers)];
 const greaterThanFour = uniqueNums.filter((num) => num > 4);
@@ -76,7 +82,9 @@ console.log("filter() active users:", activeUsers);
 
 // ============================================================
 // 7. reduce() — Reduces the array to a SINGLE value
-// Signature: reduce(callback(accumulator, currentValue, index, array), initialValue)
+// Syntax : array.reduce((accumulator, currentValue, index, array) => value, initialValue)
+// Returns: a single accumulated value. Does NOT mutate original.
+// NOTE   : Always provide initialValue to avoid errors on empty arrays
 // ============================================================
 const sum = numbers.reduce((acc, curr) => acc + curr, 0);
 console.log("reduce() sum:", sum); // 44
@@ -106,7 +114,8 @@ console.log("reduce() group by:", groupedByActive);
 
 // ============================================================
 // 8. forEach() — Executes a function for EACH element
-// Returns: undefined (does NOT create a new array)
+// Syntax : array.forEach((element, index, array) => { ... })
+// Returns: undefined. Cannot be stopped (unlike for...of + break)
 // ============================================================
 console.log("forEach():");
 fruits.forEach((fruit, index) => {
@@ -115,7 +124,8 @@ fruits.forEach((fruit, index) => {
 
 // ============================================================
 // 9. find() — Returns the FIRST element that satisfies a condition
-// Returns: the element, or undefined if not found
+// Syntax : array.find((element, index, array) => condition)
+// Returns: the element itself, or undefined if not found
 // ============================================================
 const firstBig = numbers.find((num) => num > 5);
 console.log("find():", firstBig); // 9
@@ -125,7 +135,8 @@ console.log("find() user:", foundUser); // { id: 3, name: 'Charlie', ... }
 
 // ============================================================
 // 10. findIndex() — Returns the INDEX of the first matching element
-// Returns: index or -1 if not found
+// Syntax : array.findIndex((element, index, array) => condition)
+// Returns: index (number), or -1 if not found
 // ============================================================
 const idx = numbers.findIndex((num) => num > 5);
 console.log("findIndex():", idx); // 5 (index of 9)
@@ -135,7 +146,8 @@ console.log("findIndex() user:", userIdx); // 3
 
 // ============================================================
 // 11. some() — Returns true if AT LEAST ONE element passes the test
-// Short-circuits on first match
+// Syntax : array.some((element, index, array) => condition)
+// Returns: boolean. Short-circuits (stops) on first truthy match.
 // ============================================================
 const hasEven = numbers.some((num) => num % 2 === 0);
 console.log("some() hasEven:", hasEven); // true
@@ -145,7 +157,8 @@ console.log("some() hasInactive:", hasInactiveUser); // true
 
 // ============================================================
 // 12. every() — Returns true if ALL elements pass the test
-// Short-circuits on first failure
+// Syntax : array.every((element, index, array) => condition)
+// Returns: boolean. Short-circuits (stops) on first falsy result.
 // ============================================================
 const allPositive = numbers.every((num) => num > 0);
 console.log("every() allPositive:", allPositive); // true
@@ -155,7 +168,8 @@ console.log("every() allActive:", allActive); // false
 
 // ============================================================
 // 13. includes() — Checks if an array CONTAINS a given value
-// Uses strict equality (===)
+// Syntax : array.includes(valueToFind, fromIndex?)
+// Returns: boolean. Uses SameValueZero (can find NaN, unlike indexOf)
 // ============================================================
 console.log("includes() 'banana':", fruits.includes("banana")); // true
 console.log("includes() 'mango':", fruits.includes("mango"));   // false
@@ -163,7 +177,8 @@ console.log("includes() NaN:", [1, NaN, 3].includes(NaN));      // true (unlike 
 
 // ============================================================
 // 14. indexOf() — Returns the INDEX of the FIRST occurrence
-// Returns: -1 if not found. Cannot find NaN
+// Syntax : array.indexOf(searchElement, fromIndex?)
+// Returns: index (number), or -1 if not found. Cannot detect NaN.
 // ============================================================
 console.log("indexOf() 'cherry':", fruits.indexOf("cherry")); // 2
 console.log("indexOf() 5:", numbers.indexOf(5));              // 4
@@ -171,12 +186,15 @@ console.log("indexOf() NaN:", [1, NaN, 3].indexOf(NaN));      // -1
 
 // ============================================================
 // 15. lastIndexOf() — Returns the INDEX of the LAST occurrence
+// Syntax : array.lastIndexOf(searchElement, fromIndex?)
+// Returns: index (number), or -1 if not found. Searches backwards.
 // ============================================================
 console.log("lastIndexOf() 5:", numbers.lastIndexOf(5)); // 10
 
 // ============================================================
 // 16. slice() — Returns a SHALLOW COPY of a portion of an array
-// Does NOT mutate the original. slice(start, end) — end is exclusive
+// Syntax : array.slice(start?, end?)  — end index is EXCLUSIVE
+// Returns: new array. Negative indices count from end. Does NOT mutate.
 // ============================================================
 console.log("slice(1, 3):", fruits.slice(1, 3)); // ['banana', 'cherry']
 console.log("slice(-2):", fruits.slice(-2));      // ['date', 'elderberry']
@@ -184,8 +202,8 @@ console.log("slice():", fruits.slice());          // full shallow copy
 
 // ============================================================
 // 17. splice() — Adds/removes/replaces elements IN-PLACE
-// MUTATES the original. Returns removed elements.
-// splice(start, deleteCount, ...itemsToAdd)
+// Syntax : array.splice(start, deleteCount?, item1?, item2?, ...)
+// Returns: array of removed elements. MUTATES the original.
 // ============================================================
 const spliceArr = [...fruits];
 const splicedOut = spliceArr.splice(1, 2, "blueberry", "cranberry");
@@ -194,7 +212,8 @@ console.log("splice() removed:", splicedOut);   // ['banana', 'cherry']
 
 // ============================================================
 // 18. concat() — Merges two or more arrays into a NEW array
-// Does NOT mutate the originals
+// Syntax : array.concat(value1, value2, ...valueN)
+// Returns: new merged array. Does NOT mutate originals.
 // ============================================================
 const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
@@ -206,7 +225,8 @@ console.log("concat spread:", [...arr1, ...arr2, ...arr3]);
 
 // ============================================================
 // 19. join() — Joins all elements into a STRING
-// Default separator is a comma
+// Syntax : array.join(separator?)  — default separator is ','
+// Returns: string. Does NOT mutate original.
 // ============================================================
 console.log("join():", fruits.join(", "));  // 'apple, banana, cherry, date, elderberry'
 console.log("join('-'):", fruits.join("-")); // 'apple-banana-cherry-date-elderberry'
@@ -214,7 +234,8 @@ console.log("join(''):", fruits.join(""));   // 'applebananadateelderberry'
 
 // ============================================================
 // 20. reverse() — Reverses an array IN-PLACE
-// MUTATES the original
+// Syntax : array.reverse()
+// Returns: the same (mutated) array. Use toReversed() for non-mutating.
 // ============================================================
 const reverseArr = [1, 2, 3, 4, 5];
 reverseArr.reverse();
@@ -228,7 +249,9 @@ console.log("original unchanged:", original); // [1, 2, 3, 4, 5]
 
 // ============================================================
 // 21. sort() — Sorts elements IN-PLACE
-// Default: sorts as STRINGS (lexicographic). MUTATES the original.
+// Syntax : array.sort((a, b) => a - b)  — compareFn is optional
+// Returns: the same (mutated) array. Default sorts as STRINGS (lexicographic)!
+// NOTE   : compareFn returning < 0 → a first; > 0 → b first; 0 → equal
 // ============================================================
 const sortArr = [10, 1, 21, 2, 100];
 sortArr.sort(); // lexicographic — WRONG for numbers!
@@ -251,15 +274,17 @@ console.log("original unchanged:", nums); // [3, 1, 4, 1, 5]
 
 // ============================================================
 // 22. flat() — Flattens a nested array up to a given depth
-// Default depth is 1
+// Syntax : array.flat(depth?)  — default depth is 1
+// Returns: new flattened array. Use Infinity to fully flatten.
 // ============================================================
 console.log("flat() depth 1:", nested.flat());     // [1, 2, 3, 4, 5, [6, 7]]
 console.log("flat() depth 2:", nested.flat(2));    // [1, 2, 3, 4, 5, 6, 7]
 console.log("flat(Infinity):", nested.flat(Infinity)); // fully flattened
 
 // ============================================================
-// 23. flatMap() — map() + flat(1) combined
-// More efficient than calling map().flat()
+// 23. flatMap() — map() + flat(1) combined in one pass
+// Syntax : array.flatMap((element, index, array) => newValue)
+// Returns: new array flattened by depth 1. More efficient than map().flat().
 // ============================================================
 const sentences = ["Hello World", "Foo Bar"];
 const words = sentences.flatMap((s) => s.split(" "));
@@ -270,6 +295,8 @@ console.log("flatMap() doubled:", doubled2); // [1, 2, 2, 4, 3, 6]
 
 // ============================================================
 // 24. Array.from() — Creates an array from array-like or iterable objects
+// Syntax : Array.from(arrayLike, mapFn?, thisArg?)
+// Returns: new Array. Works with strings, Sets, Maps, NodeLists, etc.
 // ============================================================
 console.log("Array.from() string:", Array.from("hello"));      // ['h', 'e', 'l', 'l', 'o']
 console.log("Array.from() Set:", Array.from(new Set([1, 2, 2, 3]))); // [1, 2, 3]
@@ -282,6 +309,8 @@ console.log("Remove duplicates:", unique); // [1, 2, 3, 4]
 
 // ============================================================
 // 25. Array.isArray() — Checks if a value is an ARRAY
+// Syntax : Array.isArray(value)
+// Returns: boolean. More reliable than typeof or instanceof.
 // ============================================================
 console.log("isArray([]):", Array.isArray([]));          // true
 console.log("isArray({}):", Array.isArray({}));          // false
@@ -290,7 +319,8 @@ console.log("isArray(null):", Array.isArray(null));      // false
 
 // ============================================================
 // 26. Array.of() — Creates an array from the given arguments
-// Unlike new Array(3) which creates [empty x 3], Array.of(3) creates [3]
+// Syntax : Array.of(element1, element2, ...elementN)
+// Returns: new Array. Unlike new Array(n) which creates n empty slots.
 // ============================================================
 console.log("Array.of():", Array.of(1, 2, 3));  // [1, 2, 3]
 console.log("Array.of(3):", Array.of(3));         // [3]  <- different from new Array(3)
@@ -298,7 +328,8 @@ console.log("new Array(3):", new Array(3));        // [empty x 3]
 
 // ============================================================
 // 27. fill() — Fills array elements with a STATIC value
-// fill(value, start, end) — end is exclusive. MUTATES the original.
+// Syntax : array.fill(value, start?, end?)  — end is EXCLUSIVE
+// Returns: the same (mutated) array. Useful to initialize arrays.
 // ============================================================
 const fillArr = [1, 2, 3, 4, 5];
 fillArr.fill(0, 2, 4);
@@ -309,7 +340,8 @@ console.log("fill() zeros:", zeros); // [0, 0, 0, 0, 0]
 
 // ============================================================
 // 28. copyWithin() — Copies part of an array to another position
-// copyWithin(target, start, end). MUTATES the original.
+// Syntax : array.copyWithin(target, start?, end?)  — does NOT change length
+// Returns: the same (mutated) array. Rarely used in interviews.
 // ============================================================
 const cwArr = [1, 2, 3, 4, 5];
 cwArr.copyWithin(0, 3); // copy from index 3 to index 0
@@ -317,6 +349,10 @@ console.log("copyWithin():", cwArr); // [4, 5, 3, 4, 5]
 
 // ============================================================
 // 29. entries(), keys(), values() — Iterator methods
+// Syntax : array.entries()  → [index, value] pairs
+//          array.keys()     → indices only
+//          array.values()   → values only
+// Returns: Array Iterator. Spread or use for...of to consume.
 // ============================================================
 const iterArr = ["a", "b", "c"];
 console.log("entries():", [...iterArr.entries()]); // [[0,'a'], [1,'b'], [2,'c']]
@@ -325,7 +361,8 @@ console.log("values():", [...iterArr.values()]);    // ['a', 'b', 'c']
 
 // ============================================================
 // 30. at() — Access elements with POSITIVE or NEGATIVE index
-// Negative index counts from the end. ES2022
+// Syntax : array.at(index)  — index can be negative
+// Returns: element at index, or undefined. ES2022. Replaces arr[arr.length - 1].
 // ============================================================
 console.log("at(0):", fruits.at(0));   // 'apple'
 console.log("at(-1):", fruits.at(-1)); // 'elderberry' (last element)
